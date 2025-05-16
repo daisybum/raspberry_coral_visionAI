@@ -5,7 +5,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         apt-transport-https ca-certificates curl gnupg \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip install --no-cache-dir \
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir \
         redis~=5.0 \
         requests~=2.32 \
         numpy~=1.26
