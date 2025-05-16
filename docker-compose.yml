@@ -8,8 +8,8 @@ services:
     restart: unless-stopped
 
   # Edge-TPU 게이트웨이
-  tpu_server:
-    build: ./tpu_server
+  edgetpu_server:
+    build: ./edgetpu_server
     privileged: true
     devices:
       - /dev/bus/usb:/dev/bus/usb          # Coral USB 동글
@@ -43,9 +43,9 @@ services:
     build: ./seg_app
     environment:
       - REDIS_HOST=redis
-      - TPU_ENDPOINT=http://tpu_server:8080
+      - TPU_ENDPOINT=http://edgetpu_server:8080
     depends_on:
-      - tpu_server
+      - edgetpu_server
     restart: unless-stopped
 
   # Classification Client
@@ -53,7 +53,7 @@ services:
     build: ./cls_app
     environment:
       - REDIS_HOST=redis
-      - TPU_ENDPOINT=http://tpu_server:8080
+      - TPU_ENDPOINT=http://edgetpu_server:8080
     depends_on:
-      - tpu_server
+      - edgetpu_server
     restart: unless-stopped
