@@ -66,8 +66,8 @@ def classify_image(req: ImgReq):
         
         # Convert NumPy types to Python native types
         result = {
-            "id": int(pred[0].id),  # Convert to Python int
-            "score": float(pred[1])  # Convert to Python float
+            "id": int(pred[0]),  # Convert NumPy int to Python int
+            "score": float(pred[1])  # Convert NumPy float to Python float
         }
         r.delete(req.redis_key)
         return result
