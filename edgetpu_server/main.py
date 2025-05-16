@@ -50,8 +50,8 @@ def segment_image(req: ImgReq):
         seg_interp.invoke()
         mask = segment.get_output(seg_interp)
     if mask.ndim == 3:
-        mask = np.argmax(mask, axis=-1).astype(np.uint8)
-    r.delete(req.redis_key)                      # 메모리 회수
+        mask = np.argmax(mask, axis=-1).astype(np.uint8)   # .astype(np.uint8)를 꼭 붙여줄 것
+    r.delete(req.redis_key)                                # 메모리 회수
     return {"mask_shape": mask.shape,
             "unique_labels": np.unique(mask).tolist()}
 
