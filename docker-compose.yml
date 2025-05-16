@@ -12,10 +12,8 @@ services:
     build: ./edgetpu_server
     privileged: true
     devices:
-      - /dev/video0:/dev/video0
       - /dev/bus/usb:/dev/bus/usb          # Coral USB 동글
     volumes:
-      - /run/udev:/run/udev:ro             # ★ 중요
       - ./models:/models:ro                # seg.tflite / cls.tflite
     environment:
       - SEG_MODEL=/models/seg_edgetpu.tflite
@@ -33,6 +31,8 @@ services:
     privileged: true                       # libcamera 사용
     devices:
       - /dev:/dev
+    volumes:
+      - /run/udev:/run/udev:ro   # ★ 중요
     environment:
       - REDIS_HOST=redis
       - INTERVAL=30                        # 캡처 주기(초)
