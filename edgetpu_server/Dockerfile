@@ -30,7 +30,8 @@ RUN set -eux; \
 # ── (2) Python 패키지 ────────────────────────────────────────────
 RUN pip install --no-cache-dir \
         fastapi~=0.111 uvicorn[standard]~=0.30 \
-        numpy pillow redis requests filelock pycoral~=2.5 tflite-runtime~=2.10
+        numpy pillow redis requests filelock \
+    python3 -m pip install --extra-index-url https://google-coral.github.io/py-repo/ pycoral~=2.0
 
 WORKDIR /app
 COPY main.py .
