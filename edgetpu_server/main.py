@@ -10,8 +10,8 @@ from filelock import FileLock
 from pycoral.utils import edgetpu
 from pycoral.adapters import common, segment, classify
 
-SEG_PATH = Path.getenv("SEG_MODEL", "/models/seg.tflite")
-CLS_PATH = Path.getenv("CLS_MODEL", "/models/cls.tflite")
+SEG_PATH = Path.getenv("SEG_MODEL", "/models/seg_edgetpu.tflite")
+CLS_PATH = Path.getenv("CLS_MODEL", "/models/cls_edgetpu.tflite")
 LOCK_PATH = Path("/tmp/edgetpu.lock")          # 컨테이너 내부 전역 락
 
 # ─── Interpreter preload ──────────────────────────────────
