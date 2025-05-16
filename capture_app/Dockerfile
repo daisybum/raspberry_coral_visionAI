@@ -20,7 +20,7 @@ RUN set -eux; \
 # ── 2) Python 라이브러리 ────────────────────────────────────────
 RUN pip install --no-cache-dir \
         redis~=5.0 \
-        numpy~=1.26
+        numpy~=1.24
 
 WORKDIR /app
 COPY run_cap.py .
