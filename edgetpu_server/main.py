@@ -1,6 +1,8 @@
 from pathlib import Path
 from typing import List
 import os
+import io
+import redis
 
 import numpy as np
 from fastapi import FastAPI, HTTPException
