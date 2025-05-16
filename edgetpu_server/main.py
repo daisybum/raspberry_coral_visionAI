@@ -57,10 +57,19 @@ def segment_image(req: ImgReq):
 
 @app.post("/classify")
 def classify_image(req: ImgReq):
-    np_img = _load_image_from_redis(req.redis_key, (cls_w, cls_h))
-    with FileLock("/tmp/edgetpu.lock"):
-        common.set_input(cls_interp, np_img)
-        cls_interp.invoke()
-        pred = classify.get_classes(cls_interp, top_k=1)[0]
-    r.delete(req.redis_key)
-    return {"id": pred.id, "score": float(pred.score)}
+    try:
+        np_img = _load_image_from_redis(req.redis_key, (cls_w, cls_h))
+        with FileLock("/tmp/edgetpu.lock"):
+            common.set_input(cls_interp, np_img)
+            cls_interp.invoke()
+            pred = classify.get_classes(cls_interp, top_k=1)[0]
+        
+        # Convert NumPy types to Python native types
+        result = {
+            "id": int(pred[0].id),  # Convert to Python int
+            "score": float(pred[1])  # Convert to Python float
+        }
+        r.delete(req.redis_key)
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
