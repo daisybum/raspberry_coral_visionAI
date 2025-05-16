@@ -1,5 +1,6 @@
 from pathlib import Path
 from typing import List
+import os
 
 import numpy as np
 from fastapi import FastAPI, HTTPException
@@ -10,8 +11,8 @@ from filelock import FileLock
 from pycoral.utils import edgetpu
 from pycoral.adapters import common, segment, classify
 
-SEG_PATH = Path.getenv("SEG_MODEL", "/models/seg_edgetpu.tflite")
-CLS_PATH = Path.getenv("CLS_MODEL", "/models/cls_edgetpu.tflite")
+SEG_PATH = os.getenv("SEG_MODEL", "/models/seg_edgetpu.tflite")
+CLS_PATH = os.getenv("CLS_MODEL", "/models/cls_edgetpu.tflite")
 LOCK_PATH = Path("/tmp/edgetpu.lock")          # 컨테이너 내부 전역 락
 
 # ─── Interpreter preload ──────────────────────────────────
